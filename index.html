@@ -1,15 +1,244 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ME SUBESTIMARON DE MI SE BURLARON PONIMX</title>
+  <style>
+    :root{
+      --bg:#fff;
+      --muted:#70757a;
+      --accent:#1a73e8;
+      --search-shadow: rgba(32,33,36,0.28);
+      font-family: Roboto, Arial, Helvetica, sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{
+      background:var(--bg);
+      color:#202124;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+    }
+
+    /* ----- Top bar (cabecera) ----- */
+    header.topbar{
+      display:flex;
+      justify-content:flex-end;
+      gap:12px;
+      align-items:center;
+      padding:10px 20px;
+      font-size:14px;
+      color:var(--muted);
+    }
+    .topbar .left-space{flex:1}
+    .top-links{display:flex;gap:12px;align-items:center}
+    .btn-link{background:none;border:0;color:var(--muted);cursor:pointer;padding:6px 10px;border-radius:4px}
+    .btn-signin{background:#1a73e8;color:#fff;padding:8px 12px;border-radius:4px;border:0;cursor:pointer}
+    .apps-btn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1px solid transparent;cursor:pointer}
+    .apps-grid{width:18px;height:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+    .apps-grid span{display:block;width:4px;height:4px;background:var(--muted);border-radius:1px}
+
+    /* Main area */
+    .main{
+      flex:1 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px 16px;
+      box-sizing:border-box;
+    }
+
+    .center-box{
+      text-align:center;
+      width:100%;
+      max-width:980px;
+    }
+
+    /* "Brand" alternativo */
+    .brand{
+      font-size:96px;
+      font-weight:700;
+      letter-spacing:-2px;
+      margin-bottom:18px;
+      user-select:none;
+    }
+    .brand span{display:inline-block}
+    .brand .c1{color:#4285F4}
+    .brand .c2{color:#EA4335}
+    .brand .c3{color:#FBBC05}
+    .brand .c4{color:#34A853}
+
+    /* Placeholder Doodle area */
+    .doodle{
+      width:100%;
+      max-width:640px;
+      height:110px;
+      margin:8px auto 18px;
+      border-radius:6px;
+      background:linear-gradient(90deg,#f8f9fa,#fff);
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 1px 3px rgba(60,64,67,0.1);
+      color:var(--muted);
+      font-size:20px;
+    }
+
+    /* Caja de búsqueda principal */
+    .search-wrap{display:flex;align-items:center;justify-content:center}
+    form.search{
+      width:100%;
+      display:flex;
+      align-items:center;
+      box-shadow:0 1px 6px var(--search-shadow);
+      border-radius:24px;
+      padding:10px 14px;
+      box-sizing:border-box;
+      max-width:640px;
+      margin:0 auto 18px;
+      border:1px solid rgba(0,0,0,0.05);
+      background:#fff;
+    }
+    .leading-icon, .trailing-icon{
+      width:20px;height:20px;margin-right:10px;opacity:0.6;flex:0 0 auto;display:flex;align-items:center;justify-content:center
+    }
+    form.search input[type="text"]{
+      flex:1 1 auto;
+      border:0;
+      outline:none;
+      font-size:16px;
+      padding:8px 6px;
+      background:transparent;
+    }
+    .mic-btn,.lens-btn{background:none;border:0;cursor:pointer;padding:6px;border-radius:6px;margin-left:6px}
+    .mic-btn{border-radius:50%}
+
+    /* Botones */
+    .buttons{display:flex;gap:8px;justify-content:center;margin-bottom:24px;flex-wrap:wrap}
+    .btn{
+      background:#f8f9fa;
+      border:1px solid #f1f3f4;
+      padding:10px 16px;
+      border-radius:4px;
+      font-size:14px;
+      cursor:pointer;
+      box-shadow:none;
+    }
+
+    /* Extra links under search */
+    .below-links{color:var(--muted);margin-top:8px;font-size:13px}
+    .lang-links{display:flex;gap:8px;justify-content:center;margin-top:6px}
+
+    /* Footer */
+    footer{
+      background:#f2f2f2;
+      padding:14px 20px;
+      font-size:14px;
+      color:var(--muted);
+      border-top:1px solid #e4e4e4;
+      flex-shrink:0;
+    }
+    .footer-inner{max-width:980px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+    .footer-left, .footer-right{display:flex;gap:12px;align-items:center}
+    a{color:inherit;text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* Small screen adjustments */
+    @media (max-width:520px){
+      .brand{font-size:56px;margin-bottom:12px}
+      form.search{max-width:100%}
+      .buttons{flex-direction:column}
+      .btn{width:100%}
+      header.topbar{padding:8px 12px}
+    }
+  </style>
 </head>
 <body>
-    
-</body>
-<p>Jancarlos Ivan Alvarez Garcia</p>
-<footer>
+  <header class="topbar" role="banner">
+    <div class="left-space" aria-hidden="true"></div>
+    <nav class="top-links" aria-label="Enlaces superiores">
+      <a class="btn-link" href="#">Gmail</a>
+      <a class="btn-link" href="#">Imágenes</a>
+      <button class="apps-btn" aria-label="Aplicaciones" title="Aplicaciones">
+        <div class="apps-grid" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </div>
+      </button>
+      <button class="btn-signin" onclick="alert('Este es un clon; no inicia sesión con cuentas reales')">Iniciar sesión</button>
+    </nav>
+  </header>
 
-</footer>
+  <main class="main" role="main">
+    <div class="center-box">
+      <div class="brand" aria-hidden="true">
+        <span class="c1">P</span><span class="c2">o</span><span class="c3">N</span><span class="c4">I</span><span class="c1">M</span><span class="c2">X</span>
+      </div>
+
+      <div class="doodle" role="img" aria-label="Doodle de ejemplo">PURO PONIMX</div>
+
+      <div class="search-wrap">
+        <form class="search" action="https://www.google.com/search" method="GET" role="search" aria-label="Formulario de búsqueda">
+          <div class="leading-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm8.707 1.293-4.39-4.39" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <input type="text" name="q" placeholder="Buscar en la web o escribe una URL" aria-label="Buscar" autocomplete="off" />
+          <button type="button" class="lens-btn" title="Buscar por imagen" aria-label="Buscar por imagen" onclick="alert('Funcionalidad de búsqueda por imagen (simulada)')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+          <button type="button" class="mic-btn" aria-label="Búsqueda por voz" title="Búsqueda por voz" onclick="alert('Búsqueda por voz (simulada)')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 11v2a7 7 0 0 1-14 0v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+      </div>
+
+      <div class="buttons" role="region" aria-label="Acciones de búsqueda">
+        <button class="btn" onclick="document.querySelector('form.search').submit();">Buscar con Google</button>
+        <!-- Corregido el onclick con comillas -->
+        <button class="btn" onclick='alert("Simulación de Voy a tener suerte")'>Voy a tener suerte</button>
+      </div>
+
+      <!-- Quitado aria-hidden="false" -->
+      <div class="below-links">
+        Ofrecido por: <strong>Tu motor de búsqueda</strong>
+        <div class="lang-links" role="navigation" aria-label="Idiomas">
+          <span>También disponible en:</span>
+          <a href="#">Español</a>
+          <a href="#">English</a>
+          <a href="#">Français</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span>México</span>
+        <a href="#">Publicidad</a>
+        <a href="#">Negocios</a>
+        <a href="#">Cómo funciona la búsqueda</a>
+      </div>
+      <div class="footer-right">
+        <a href="#">Privacidad</a>
+        <a href="#">Condiciones</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('keydown', e => {
+      if(e.key === '/' && document.activeElement.tagName !== 'INPUT'){
+        const input = document.querySelector('form.search input[name=q]');
+        if(input){ e.preventDefault(); input.focus(); }
+      }
+    });
+    document.querySelectorAll('.apps-btn').forEach(btn => {
+      btn.addEventListener('click', ()=> alert('Menú de aplicaciones (simulado)'))
+    });
+  </script>
+</body>
 </html>
