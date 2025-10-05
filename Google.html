@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Pestaña</title>
+
+    <style>
+        /* * 1. FONDO Y ESTILOS GLOBALES: Modo Oscuro */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Roboto, Arial, sans-serif;
+            background-color: #202124; /* Fondo gris oscuro principal */
+            color: #E8EAED; /* Color de texto claro */
+        }
+
+        /* Contenedor principal para la estructura */
+        #ntp-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            min-height: 100vh;
+            justify-content: center;
+            padding-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        /* --- 2. BARRA SUPERIOR DERECHA (Gmail, Imágenes, Perfil) --- */
+        #top-right-bar {
+            position: fixed;
+            top: 15px; /* Separación desde la parte superior */
+            right: 15px; /* Separación desde el borde derecho */
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Espacio entre los elementos */
+            z-index: 10;
+        }
+
+        #top-right-bar a {
+            color: #E8EAED; /* Texto blanco */
+            text-decoration: none;
+            font-size: 13px;
+            padding: 5px 0;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        
+        #top-right-bar a:hover {
+            opacity: 1;
+        }
+        
+        .icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .icon-container:hover {
+            background-color: rgba(255, 255, 255, 0.1); /* Sutil hover en el modo oscuro */
+        }
+
+        /* Estilo para iconos (Matraz y Apps) */
+        .icon-symbol {
+            font-size: 18px;
+            color: #E8EAED;
+        }
+
+        /* Estilo específico para el perfil (letra K en círculo) */
+        .profile-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #F4B400; /* Color similar al icono de perfil de Chrome */
+            color: #202124;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+
+        /* --- 3. CONTENIDO CENTRAL (Logo y Barra de Búsqueda) --- */
+        #main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Mueve todo el contenido central hacia arriba para imitar la captura */
+            transform: translateY(-10vh); 
+        }
+
+        /* Logo Google */
+        #logo-text {
+            font-size: 100px; 
+            font-weight: 300;
+            color: #FFFFFF;
+            margin-bottom: 30px;
+            user-select: none;
+        }
+
+        /* BARRA DE BÚSQUEDA */
+        #search-box {
+            display: flex;
+            align-items: center;
+            width: 580px; 
+            height: 44px;
+            border-radius: 24px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); 
+            background-color: #303134; 
+            padding: 0 8px;
+            margin-bottom: 25px;
+            border: 1px solid transparent;
+            transition: box-shadow 0.2s, border 0.2s;
+        }
+        
+        #search-box:hover {
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+            border: 1px solid #5F6368; 
+        }
+
+        #search-box input[type="search"] {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            margin: 0 10px;
+            background-color: transparent;
+            color: #E8EAED;
+        }
+
+        #search-box label[for="query"] { display: none; }
+        
+        .search-icon, .mic-icon, .lens-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0 8px;
+            color: #9AA0A6;
+            height: 24px;
+            line-height: 24px;
+        }
+        
+        /* --- 4. ACCESOS DIRECTOS (Solo el botón de Añadir) --- */
+        #accesos-directos { margin-top: 0; padding: 0; }
+        #accesos-directos h2 { display: none; }
+        #accesos-directos ul { display: flex; list-style: none; padding: 0; margin: 0; gap: 20px; }
+        
+        .shortcut-item {
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            width: 100px; padding: 8px 0; border-radius: 10px; transition: background-color 0.2s;
+        }
+        .shortcut-item:hover { background-color: rgba(232, 234, 237, 0.08); }
+        .shortcut-item a { text-decoration: none; color: #9AA0A6; }
+        .shortcut-icon {
+            display: flex; justify-content: center; align-items: center;
+            width: 48px; height: 48px; border-radius: 50%;
+            background-color: #3C4043;
+            font-size: 20px; margin-bottom: 8px; color: #E8EAED; font-weight: lighter;
+        }
+        .shortcut-item figcaption {
+            font-size: 13px; white-space: nowrap; overflow: hidden;
+            text-overflow: ellipsis; max-width: 90px;
+        }
+        
+        /* Oculta los atajos de ejemplo dejando solo el botón '+' */
+        #accesos-directos ul li:not(:last-child) { display: none; }
+
+
+        /* --- 5. PIE DE PÁGINA: Personalizar Chrome --- */
+        footer {
+            width: 100%; display: flex; justify-content: flex-end; 
+            padding: 0 20px 20px 0; box-sizing: border-box; position: fixed; bottom: 0;
+        }
+        footer hr, footer p { display: none; }
+        
+        #customize-link {
+            display: flex; align-items: center; padding: 8px 16px; border-radius: 20px; border: none;
+            background-color: #8AB4F8; color: #202124; text-decoration: none; font-size: 14px; cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); transition: background-color 0.2s;
+        }
+
+        #customize-link:hover { background-color: #AECBFA; }
+        #customize-link .icon { margin-left: 8px; }
+    </style>
+</head>
+<body>
+
+    <div id="ntp-container">
+        
+        <nav id="top-right-bar" aria-label="Enlaces rápidos y perfil">
+            <a href="https://mail.google.com/">Gmail</a>
+            <a href="https://images.google.com/">Imágenes</a>
+
+            <div class="icon-container" title="Laboratorio de Chrome">
+                 <span class="icon-symbol">🧪</span> 
+            </div>
+            
+            <div class="icon-container" title="Google Apps">
+                <span class="icon-symbol">🍱</span> 
+            </div>
+
+            <div class="profile-icon">
+                K
+            </div>
+        </nav>
+        
+        <main id="main-content">
+            
+            <header>
+                <div id="logo-text">Wikipedia</div>
+            </header>
+
+            <section id="barra-busqueda">
+                <form id="search-box" action="https://www.google.com/search" method="get">
+                    <button type="button" class="search-icon">🔍</button>
+                    <label for="query">Buscar en Google:</label>
+                    <input type="search" id="query" name="q" placeholder="Buscar en Google o escribir una URL" autofocus>
+                    <button type="button" class="mic-icon">🎤</button>
+                    <button type="button" class="lens-icon">📸</button>
+                </form>
+            </section>
+
+            <section id="accesos-directos">
+                <h2>Accesos Directos</h2>
+                <ul>
+                    <li class="shortcut-item">...</li> 
+                    <li class="shortcut-item">...</li> 
+                    <li class="shortcut-item">
+                        <a href="#">
+                            <figure>
+                                <div class="shortcut-icon">+</div>
+                                <figcaption>Añadir acces...</figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <nav aria-label="Opciones de personalización">
+                <a href="#" id="customize-link">
+                    <span>Personalizar Chrome</span>
+                    <span class="icon">✏️</span>
+                </a>
+            </nav>
+            <p>Derechos de autor (c) 2025 Google.</p>
+        </footer>
+    </div>
+</body>
+</html> 
