@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MiBuscador — Inicio</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --muted:#70757a;
+      --accent:#1a73e8;
+      --input-bg:#f1f3f4;
+      --shadow: 0 1px 6px rgba(32,33,36,0.28);
+      font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    html,body{
+      height:100%;
+      margin:0;
+      background:var(--bg);
+      color:#202124;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    header{
+      height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      padding:0 24px;
+      font-size:14px;
+      color:var(--muted);
+    }
+    header a{
+      margin-left:18px;
+      color:var(--muted);
+      text-decoration:none;
+    }
+    .container{
+      min-height: calc(100vh - 72px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+    }
+    .logo {
+      font-weight:700;
+      font-size:64px;
+      letter-spacing: -1px;
+      margin-bottom:18px;
+      color: #222;
+    }
+    /* Subtle multi-color accent for character */
+    .logo span.m1{ color:#4285F4; }
+    .logo span.m2{ color:#EA4335; }
+    .logo span.m3{ color:#FBBC05; }
+    .logo span.m4{ color:#34A853; }
+    
+    .search-box {
+      display:flex;
+      align-items:center;
+      width:min(650px,90%);
+      background:var(--input-bg);
+      border-radius:24px;
+      padding:10px 14px;
+      box-shadow:var(--shadow);
+    }
+    .search-box input{
+      flex:1;
+      border:0;
+      outline: none;
+      background:transparent;
+      font-size:18px;
+      padding:8px 10px;
+      color:#202124;
+    }
+    .search-actions{
+      margin-top:18px;
+      display:flex;
+      gap:10px;
+    }
+    .btn{
+      background:#f8f9fa;
+      border:1px solid #f1f3f4;
+      padding:10px 16px;
+      border-radius:4px;
+      font-size:14px;
+      cursor:pointer;
+      color:#3c4043;
+    }
+    .btn.primary{
+      background:var(--accent);
+      color:white;
+      border-color:transparent;
+      box-shadow: 0 1px 2px rgba(26,115,232,0.2);
+    }
+    footer{
+      margin-top:80px;
+      width:100%;
+      padding:14px 24px;
+      display:flex;
+      justify-content:space-between;
+      color:var(--muted);
+      font-size:14px;
+      box-sizing:border-box;
+    }
+    /* Responsive tweaks */
+    @media (max-width:480px){
+      .logo{ font-size:44px; }
+      .search-actions{ flex-direction:column; }
+      .btn{ width:100%; }
+      header{ justify-content:space-between; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="#" aria-label="Gmail">Mail</a>
+      <a href="#" aria-label="Imágenes">Imágenes</a>
+    </nav>
+  </header>
+
+  <main class="container" role="main">
+    <!-- Logo (no es el logo de Google) -->
+    <div class="logo" aria-hidden="false">
+      <span class="m1">Mi</span><span class="m2">Bus</span><span class="m3">cador</span><span class="m4">.</span>
+    </div>
+
+    <!-- Search form -->
+    <form id="searchForm" class="search-box" role="search" aria-label="Buscar en la web">
+      <input id="q" name="q" type="search" placeholder="Buscar en la web" autocomplete="off" aria-label="Caja de búsqueda" />
+      <!-- simple icon (SVG) -->
+      <button type="submit" title="Buscar" aria-label="Buscar" style="background:none;border:0;padding:6px;cursor:pointer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M15.5 15.5L21 21" stroke="#5f6368" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="10.5" cy="10.5" r="6.5" stroke="#5f6368" stroke-width="2" fill="transparent"/>
+        </svg>
+      </button>
+    </form>
+
+    <div class="search-actions" role="group" aria-label="Acciones de búsqueda">
+      <button class="btn" id="btnLucky">Voy a tener suerte</button>
+      <button class="btn primary" id="btnSearch">Buscar</button>
+    </div>
+
+    <footer>
+      <div>País: España</div>
+      <div>
+        <a href="#" style="color:var(--muted);text-decoration:none;margin-right:12px">Preferencias</a>
+        <a href="#" style="color:var(--muted);text-decoration:none">Privacidad</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Comportamiento simple: redirige a DuckDuckGo para búsquedas,
+    // evitando suplantar a ningún motor concreto.
+    const form = document.getElementById('searchForm');
+    const q = document.getElementById('q');
+    const btnSearch = document.getElementById('btnSearch');
+    const btnLucky = document.getElementById('btnLucky');
+
+    function searchRedirect(query) {
+      const trimmed = (query || '').trim();
+      if(!trimmed) {
+        // si está vacío, no hacemos nada visual; resaltamos la caja
+        q.focus();
+        q.style.boxShadow = '0 0 0 3px rgba(26,115,232,0.12)';
+        setTimeout(()=> q.style.boxShadow='none',600);
+        return;
+      }
+      // Cambia el motor si quieres; aquí usamos DuckDuckGo por defecto
+      const dd = 'https://duckduckgo.com/?q=' + encodeURIComponent(trimmed);
+      window.location.href = dd;
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      searchRedirect(q.value);
+    });
+
+    btnSearch.addEventListener('click', function(){
+      searchRedirect(q.value);
+    });
+
+    // "Voy a tener suerte" -> abre resultado aleatorio de Wikipedia como ejemplo seguro
+    btnLucky.addEventListener('click', function(){
+      // redirige a una página aleatoria de Wikipedia en español
+      window.location.href = 'https://es.wikipedia.org/wiki/Especial:Aleatoria';
+    });
+
+    // tecla "/" para enfocar la caja (como accesibilidad)
+    window.addEventListener('keydown', function(e){
+      // no interferir con inputs
+      const tag = document.activeElement.tagName.toLowerCase();
+      if(tag === 'input' || tag === 'textarea' || e.metaKey || e.ctrlKey) return;
+      if(e.key === '/') {
+        e.preventDefault();
+        q.focus();
+      }
+    });
+  </script>
+</body>
+</html>
